@@ -42,4 +42,11 @@ def plot_confusion_matrix(cfm,name,dpi=80):
     plt.tight_layout()
     plt.savefig(name+'.pdf')
     plt.show()
+    
+def setGeo(geotransform,bgx,bgy):
+    reset0 = geotransform[0] + bgx*geotransform[1]
+    reset3 = geotransform[3] + bgy*geotransform[5]
+    reset = (reset0,geotransform[1],geotransform[2],
+             reset3,geotransform[4],geotransform[5])
+    return reset
 
