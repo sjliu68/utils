@@ -1,6 +1,49 @@
 import numpy as np
 import scipy.stats as st
 
+'''
+['BrightnessTemperature_M12',
+ 'BrightnessTemperature_M13',
+ 'BrightnessTemperature_M15', 
+ 'BrightnessTemperature_M16', 
+ 'DNB_At_Sensor_Radiance_500m',  4
+ 'Glint_Angle', 
+ 'Granule', 
+ 'Lunar_Azimuth', 
+ 'Lunar_Zenith', 
+ 'Moon_Illumination_Fraction', 
+ 'Moon_Phase_Angle', 
+ 'QF_Cloud_Mask',  11
+ 'QF_DNB',  12
+ 'QF_VIIRS_M10', 
+ 'QF_VIIRS_M11',
+ 'QF_VIIRS_M12',
+ 'QF_VIIRS_M13', 
+ 'QF_VIIRS_M15', 
+ 'QF_VIIRS_M16', 
+ 'Radiance_M10', 
+ 'Radiance_M11', 
+ 'Sensor_Azimuth', 
+ 'Sensor_Zenith', 
+ 'Solar_Azimuth', 
+ 'Solar_Zenith', 
+ 'UTC_Time', 25]
+'''
+def read_vnp(filename,idx=4):
+    f = h5py.File(filename,'r')
+    
+    a = list(f.keys())[0]
+    b = list(f[a].keys())[1]
+    c = list(f[a][b].keys())[0]
+    d = list(f[a][b][c].keys())[0]
+    e = list(f[a][b][c][d].keys()) # 26 files in this list
+    
+    data = f[a][b][c][d]
+    data = data[e[idx]]
+    data = data[:]
+    
+    return data
+
 # Generate a Gaussian kernel 
 # rbf = gkern(5,2.5)*273
 def gkern(kernlen=21, nsig=3):
