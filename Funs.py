@@ -1,5 +1,32 @@
 import numpy as np
 import scipy.stats as st
+import h5py
+
+'''
+dnb = 4
+utc = -1
+moon phase angle = 10
+m11 radiance cloud = 20 
+'''
+def read_vnp(filename,idx=4):
+
+    f = h5py.File(filename,'r')
+    a = list(f.keys())[0]
+    b = list(f[a].keys())[1]
+    c = list(f[a][b].keys())[0]
+    d = list(f[a][b][c].keys())[0]
+    e = list(f[a][b][c][d].keys()) # 26 files in this list
+    
+    data = f[a][b][c][d]
+    data = data[e[idx]]
+    data = data[:]
+    
+    return data
+
+def latlng2pix(geo,lat,lng):
+    imx = (lat-geo[3])/geo[5] 
+    imy = (lng-geo[0])/geo[1]
+    return int(imx),int(imy)
 
 '''
 ['BrightnessTemperature_M12',
