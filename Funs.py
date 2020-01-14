@@ -24,8 +24,8 @@ def read_vnp(filename,idx=4):
     return data
 
 def latlng2pix(geo,lat,lng):
-    imx = (lat-geo[3])/geo[5] 
-    imy = (lng-geo[0])/geo[1]
+    imx = (lat+geo[5]/2-geo[3])/geo[5] 
+    imy = (lng+geo[1]/2-geo[0])/geo[1]
     return int(imx),int(imy)
 
 '''
