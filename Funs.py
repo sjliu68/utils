@@ -1,7 +1,35 @@
 import numpy as np
 import scipy.stats as st
 import h5py
+import matplotlib.pyplot as plt
 
+# save remote sensing image classification maps
+def save_cmap(img, cmap, fname):
+   
+    sizes = np.shape(img)
+    height = float(sizes[0])
+    width = float(sizes[1])
+     
+    fig = plt.figure()
+    fig.set_size_inches(width/height, 1, forward=False)
+    ax = plt.Axes(fig, [0., 0., 1., 1.])
+    ax.set_axis_off()
+    fig.add_axes(ax)
+ 
+    ax.imshow(img, cmap=cmap)
+    plt.savefig(fname, dpi = height) 
+    plt.close()
+    
+# visualize RS data to RGB figure
+def strimg255(im, perc=0.5):
+    maxx = np.percentile(im,100-perc)
+    minn = np.percentile(im,perc)
+    im[im>maxx] = maxx
+    im[im<minn] = minn 
+    im_new = np.fix((im-minn)/(maxx-minn)*255).astype(np.uint8)
+    return im_new
+
+# read vnp46a1 data
 '''
 dnb = 4
 utc = -1
@@ -23,11 +51,13 @@ def read_vnp(filename,idx=4):
     
     return data
 
+# gdal: given latitude and longitude, check its pixel location 
 def latlng2pix(geo,lat,lng):
     imx = (lat+geo[5]/2-geo[3])/geo[5] 
     imy = (lng+geo[1]/2-geo[0])/geo[1]
     return int(imx),int(imy)
 
+# read vnp46a1 data
 '''
 ['BrightnessTemperature_M12',
  'BrightnessTemperature_M13',
@@ -71,8 +101,7 @@ def read_vnp(filename,idx=4):
     
     return data
 
-# Generate a Gaussian kernel 
-# rbf = gkern(5,2.5)*273
+# Generate a Gaussian kernel, rbf = gkern(5,2.5)*273
 def gkern(kernlen=21, nsig=3):
     """Returns a 2D Gaussian kernel."""
     x = np.linspace(-nsig, nsig, kernlen+1)
@@ -80,7 +109,7 @@ def gkern(kernlen=21, nsig=3):
     kern2d = np.outer(kern1d, kern1d)
     return kern2d/kern2d.sum()
 
-# plot confusion matrix
+# plot confusion matrix, lcz-17
 def plot_confusion_matrix(cfm,name,dpi=80):
     lcz = ['LCZ-1','LCZ-2','LCZ-3','LCZ-4','LCZ-5','LCZ-6','LCZ-7','LCZ-8','LCZ-9',
            'LCZ-10','LCZ-A','LCZ-B','LCZ-C','LCZ-D','LCZ-E','LCZ-F','LCZ-G']
@@ -113,6 +142,7 @@ def plot_confusion_matrix(cfm,name,dpi=80):
     plt.savefig(name+'.pdf')
     plt.show()
     
+# gdal, set GeoTransform with new bgx and bgy
 def setGeo(geotransform,bgx,bgy):
     reset0 = geotransform[0] + bgx*geotransform[1]
     reset3 = geotransform[3] + bgy*geotransform[5]
