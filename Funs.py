@@ -150,3 +150,112 @@ def setGeo(geotransform,bgx,bgy):
              reset3,geotransform[4],geotransform[5])
     return reset
 
+# save classification maps
+if False:
+    c_paviaC = ['#000000','#0000FF','#228B22','#7BFC00', '#FF0000', '#724A12', '#C0C0C0',
+              '#00FFFF', '#FF8000', '#FFFF00']
+    c_salinas = ['#000000','#DCB809','#03009A','#FE0000','#FF349B','#FF66FF',
+              '#0000FD','#EC8101','#00FF00','#838300','#990099','#00F7F1',
+              '#009999','#009900','#8A5E2D','#67FECB','#F6EF00']
+    c_indian = ['#000000','#FFFC86','#0037F3','#FF5D00','#00FB84','#FF3AFC',
+              '#4A32FF','#00ADFF','#00FA00','#AEAD51','#A2549E','#54B0FF',
+              '#375B70','#65BD3C','#8F462C','#6CFCAB','#FFFC00']
+    c_paviaU = ['#000000','#CACACA','#02FF00','#00FFFF','#088505','#FF00FE','#AA562E','#8C0085','#FD0000', '#FFFF00']
+    c_pu12 = ['#000000','#CACACA','#02FF00','#00FFFF','#088505', '#FF00FE', '#AA562E', '#8C0085',
+              '#FD0000','#FFFF00','#858688','#7D5E4C','#3D3733']
+def save_cmap_pc(img, cmap, fname):
+    colors = ['#000000','#0000FF','#228B22','#7BFC00', '#FF0000', '#724A12', '#C0C0C0',
+              '#00FFFF', '#FF8000', '#FFFF00']
+    cmap = ListedColormap(colors)
+   
+    sizes = np.shape(img)
+    height = float(sizes[0])
+    width = float(sizes[1])
+     
+    fig = plt.figure()
+    fig.set_size_inches(width/height, 1, forward=False)
+    ax = plt.Axes(fig, [0., 0., 1., 1.])
+    ax.set_axis_off()
+    fig.add_axes(ax)
+ 
+    ax.imshow(img, cmap=cmap, vmin=0, vmax=9)
+    plt.savefig(fname, dpi = height)
+    plt.close()
+    
+def save_cmap_salinas(img,cmap,fname):
+    colors = ['#000000','#DCB809','#03009A','#FE0000','#FF349B','#FF66FF',
+              '#0000FD','#EC8101','#00FF00','#838300','#990099','#00F7F1',
+              '#009999','#009900','#8A5E2D','#67FECB','#F6EF00']
+    cmap = ListedColormap(colors)
+   
+    sizes = np.shape(img)
+    height = float(sizes[0])
+    width = float(sizes[1])
+     
+    fig = plt.figure()
+    fig.set_size_inches(width/height, 1, forward=False)
+    ax = plt.Axes(fig, [0., 0., 1., 1.])
+    ax.set_axis_off()
+    fig.add_axes(ax)
+ 
+    ax.imshow(img, cmap=cmap, vmin=0, vmax=16)
+    plt.savefig(fname, dpi = height)
+    plt.close()
+    
+def save_cmap_indian(img,cmap,fname):
+    colors = ['#000000','#FFFC86','#0037F3','#FF5D00','#00FB84','#FF3AFC',
+              '#4A32FF','#00ADFF','#00FA00','#AEAD51','#A2549E','#54B0FF',
+              '#375B70','#65BD3C','#8F462C','#6CFCAB','#FFFC00']
+    cmap = ListedColormap(colors)
+   
+    sizes = np.shape(img)
+    height = float(sizes[0])
+    width = float(sizes[1])
+     
+    fig = plt.figure()
+    fig.set_size_inches(width/height, 1, forward=False)
+    ax = plt.Axes(fig, [0., 0., 1., 1.])
+    ax.set_axis_off()
+    fig.add_axes(ax)
+ 
+    ax.imshow(img, cmap=cmap, vmin=0, vmax=16)
+    plt.savefig(fname, dpi = height)
+    plt.close()
+
+def save_cmap(img, cmap, fname):
+    colors = ['#000000','#CACACA','#02FF00','#00FFFF','#088505','#FF00FE','#AA562E','#8C0085','#FD0000', '#FFFF00']
+    cmap = ListedColormap(colors)
+   
+    sizes = np.shape(img)
+    height = float(sizes[0])
+    width = float(sizes[1])
+     
+    fig = plt.figure()
+    fig.set_size_inches(width/height, 1, forward=False)
+    ax = plt.Axes(fig, [0., 0., 1., 1.])
+    ax.set_axis_off()
+    fig.add_axes(ax)
+ 
+    ax.imshow(img, cmap=cmap, vmin=0, vmax=9)
+    plt.savefig(fname, dpi = height)
+    plt.close()
+    
+def save_cmap_pu12(img, cmap, fname):
+    colors = ['#000000','#CACACA','#02FF00','#00FFFF','#088505', '#FF00FE', '#AA562E', '#8C0085',
+              '#FD0000','#FFFF00','#858688','#7D5E4C','#3D3733']
+    cmap = ListedColormap(colors)
+   
+    sizes = np.shape(img)
+    height = float(sizes[0])
+    width = float(sizes[1])
+     
+    fig = plt.figure()
+    fig.set_size_inches(width/height, 1, forward=False)
+    ax = plt.Axes(fig, [0., 0., 1., 1.])
+    ax.set_axis_off()
+    fig.add_axes(ax)
+ 
+    ax.imshow(img, cmap=cmap, vmin=0, vmax=12)
+    plt.savefig(fname, dpi = height)
+    plt.close()
+
